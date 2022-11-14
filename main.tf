@@ -18,21 +18,36 @@ data "aws_ami" "windows" {
 resource "aws_security_group" "allow_tls" {
   name        = "allow_tls"
   description = "Allow TLS inbound traffic"
-
-  ingress {
+ ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "ssh"
+    cidr_blocks = ["142.188.159.9/32"]
+  }
+  egress {
     description = "TLS from VPC"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] #[aws_vpc.main.cidr_block]
+    cidr_blocks = ["35.203.94.19/32",
+                   "34.152.28.44/32",
+                   "54.213.119.159/32",
+                   "34.218.159.79/32",
+                   "52.33.16.117/32",
+                   "3.225.222.13/32",
+                   "34.197.160.162/32",
+                   "3.213.188.29/32",
+                   "35.164.189.142/32",
+           	       "35.166.154.241/32",
+                   "35.160.254.91/32",
+                   "35.168.234.8/32",
+                   "34.204.215.165/32",
+                   "54.92.237.118/32"
+
+
+] #[aws_vpc.main.cidr_block]
   }
 
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 
   tags = {
     Name = "allow_tls"
@@ -54,7 +69,7 @@ resource "aws_instance" "ec2" {
     volume_type = var.volume_type
   }
   tags = {
-    Name = var.tag
+    Name = "GFLAWS-RPA1"
   }
 }
 resource "tls_private_key" "instance" {
@@ -65,7 +80,7 @@ resource "aws_key_pair" "instance" {
   key_name   = var.key_name
   public_key = tls_private_key.instance.public_key_openssh
   tags = {
-    Name = "test-keypair"
+    Name = "rpaprod_keypair"
   }
 }
 
