@@ -56,3 +56,11 @@ variable "secretsmanager_secret" {
   type        = string
   default     = ""
 }
+
+variable "default_state_bucket" {
+  description = "Name of the S3 bucket the terraform state should be placed in"
+}
+
+variable "default_region" {
+  description = "Default AWS region for resources"
+}

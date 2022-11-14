@@ -1,7 +1,7 @@
 terraform {
     backend "s3" {
-        bucket = "aws_s3_bucket.buddy.id"
-        key = "network/terraform.tfstate"
-        region = "ap-south-1"
+        bucket = var.default_state_bucket
+        key = "terraform/deployment/accounts/${var.clp_account}/regions/${var.clp_region}/vpc/networking/vpc_base/terraform.tfstate"
+        region = var.default_region
     }
 }

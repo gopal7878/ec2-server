@@ -30,7 +30,7 @@ resource "aws_s3_bucket" "buddy" {
 }
 
 resource "aws_iam_policy" "bucket_policy" {
-  name        = aws_s3_bucket.buddy.id
+  name        = var.default_state_bucket 
   path        = "/"
   description = "Allow "
 
